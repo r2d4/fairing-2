@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: notebook
+spec:
+  containers:
+  - name: notebook
+    image: gcr.io/r2d4minikube/notebook
+    ports:
+      - containerPort: 8888

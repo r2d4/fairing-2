@@ -1,0 +1,9 @@
+apiVersion: skaffold/v1alpha3
+kind: Config
+build:
+  artifacts:
+  - imageName: gcr.io/r2d4minikube/notebook
+deploy:
+  kubectl:
+    manifests:
+    - k8s/notebook.yaml
