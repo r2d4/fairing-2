@@ -1,8 +1,8 @@
-apiVersion: skaffold/v1alpha3
+apiVersion: skaffold/v1alpha4
 kind: Config
 build:
   artifacts:
-  - imageName: gcr.io/r2d4minikube/notebook
+  - image: gcr.io/r2d4minikube/notebook
 deploy:
   kubectl:
     manifests:
