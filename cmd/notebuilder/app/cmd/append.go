@@ -40,7 +40,7 @@ func NewCmdAppend(out io.Writer) *cobra.Command {
 
 	cmd.Flags().StringVar(&baseImage, "base-image", "", "the base image to append to")
 	cmd.Flags().StringVar(&dstImage, "dst-image", "", "the image tag to push")
-	cmd.Flags().StringVar(&dstImage, "layer-file", "", "a tar.gz file to append as a layer")
+	cmd.Flags().StringVar(&layerFile, "layer-file", "", "a tar.gz file to append as a layer")
 
 	cmd.Flags().VarP(versionFlag, "output", "o", versionFlag.Usage())
 	return cmd

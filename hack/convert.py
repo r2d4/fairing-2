@@ -13,6 +13,7 @@ import nbconvert
 import ast
 import astunparse
 import tarfile
+import subprocess
 
 annotation = 'kubeflow/train'
 
@@ -57,10 +58,9 @@ def gen_tarball(contents):
         tar.add(tmpfile)
     return tar_name
 
-
-notebook_name = get_notebook_name()
-source = convert_to_python(notebook_name)
-print(source)
-output_tar = gen_tarball(source)
-print(output_tar)
+def build_image(base_image, tag):
+    notebook_name = get_notebook_name()
+    source = convert_to_python(notebook_name)
+    output_tar = gen_tarball(source)
+    subprocess.run(["notebuilder", "append", "--layerfile", "--base-image", base_image, "--dst-image", tag], capture_output=True)
 

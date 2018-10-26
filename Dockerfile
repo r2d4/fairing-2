@@ -14,5 +14,5 @@ RUN make install
 FROM base
 ENV JUPYTER_TOKEN=token
 COPY --from=builder /go/bin/notebuilder /usr/bin/notebuilder
-COPY hack/*.py /home/jovyan/work
+COPY --chown=jovyan:users hack/*.py  /home/jovyan/work/lib/
 

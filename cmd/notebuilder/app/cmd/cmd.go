@@ -43,7 +43,7 @@ func NewRootCommand(out, err io.Writer) *cobra.Command {
 	}
 
 	rootCmd.AddCommand(NewCmdVersion(out))
-
+	rootCmd.AddCommand(NewCmdAppend(out))
 	rootCmd.PersistentFlags().StringVarP(&v, "verbosity", "v", constants.DefaultLogLevel.String(), "Log level (debug, info, warn, error, fatal, panic")
 	return rootCmd
 }

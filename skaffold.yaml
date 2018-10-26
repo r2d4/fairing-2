@@ -4,7 +4,7 @@ build:
   artifacts:
   - image: gcr.io/r2d4minikube/notebook
     sync:
-      'hack/*.py': "/home/jovyan/work"
+      'hack/*.py': "/home/jovyan/work/lib/"
 deploy:
   kubectl:
     manifests:
