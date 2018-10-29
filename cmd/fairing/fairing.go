@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"github.com/r2d4/fairing/cmd/fairing/app"
+	"github.com/kubeflow/fairing/cmd/fairing/app"
 	"github.com/sirupsen/logrus"
 )
 

@@ -19,7 +19,7 @@ package app
 import (
 	"os"
 
-	"github.com/r2d4/fairing/cmd/fairing/app/cmd"
+	"github.com/kubeflow/fairing/cmd/fairing/app/cmd"
 )
 
 func Run() error {

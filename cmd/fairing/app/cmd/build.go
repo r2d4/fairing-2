@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/r2d4/fairing/pkg/fairing/build"
+	"github.com/kubeflow/fairing/pkg/fairing/build"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"

@@ -19,9 +19,9 @@ package cmd
 import (
 	"io"
 
+	"github.com/kubeflow/fairing/pkg/fairing/constants"
+	"github.com/kubeflow/fairing/pkg/fairing/version"
 	"github.com/pkg/errors"
-	"github.com/r2d4/fairing/pkg/fairing/constants"
-	"github.com/r2d4/fairing/pkg/fairing/version"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )

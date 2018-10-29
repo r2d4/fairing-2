@@ -19,9 +19,9 @@ package cmd
 import (
 	"io"
 
+	"github.com/kubeflow/fairing/cmd/fairing/app/flags"
+	"github.com/kubeflow/fairing/pkg/fairing/version"
 	"github.com/pkg/errors"
-	"github.com/r2d4/fairing/cmd/fairing/app/flags"
-	"github.com/r2d4/fairing/pkg/fairing/version"
 	"github.com/spf13/cobra"
 )
 
