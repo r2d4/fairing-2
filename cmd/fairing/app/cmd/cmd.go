@@ -20,8 +20,8 @@ import (
 	"io"
 
 	"github.com/pkg/errors"
-	"github.com/r2d4/notebuilder/pkg/notebuilder/constants"
-	"github.com/r2d4/notebuilder/pkg/notebuilder/version"
+	"github.com/r2d4/fairing/pkg/fairing/constants"
+	"github.com/r2d4/fairing/pkg/fairing/version"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -29,7 +29,7 @@ import (
 var v string
 
 var rootCmd = &cobra.Command{
-	Use:   "notebuilder",
+	Use:   "fairing",
 	Short: "",
 }
 
@@ -38,10 +38,11 @@ func NewRootCommand(out, err io.Writer) *cobra.Command {
 		if err := SetUpLogs(err, v); err != nil {
 			return err
 		}
+		rootCmd.SilenceUsage = true
 		logrus.Infof("%+v", version.Get())
 		return nil
 	}
-
+	rootCmd.SilenceErrors = true
 	rootCmd.AddCommand(NewCmdVersion(out))
 	rootCmd.AddCommand(NewCmdAppend(out))
 	rootCmd.PersistentFlags().StringVarP(&v, "verbosity", "v", constants.DefaultLogLevel.String(), "Log level (debug, info, warn, error, fatal, panic")

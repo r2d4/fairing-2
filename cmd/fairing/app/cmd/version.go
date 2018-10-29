@@ -19,35 +19,29 @@ package cmd
 import (
 	"io"
 
-	"github.com/r2d4/notebuilder/pkg/notebuilder/build"
-
 	"github.com/pkg/errors"
+	"github.com/r2d4/fairing/cmd/fairing/app/flags"
+	"github.com/r2d4/fairing/pkg/fairing/version"
 	"github.com/spf13/cobra"
 )
 
-var (
-	baseImage, dstImage, layerFile string
-)
+var versionFlag = flags.NewTemplateFlag("{{.Version}}\n", version.Info{})
 
-func NewCmdAppend(out io.Writer) *cobra.Command {
+func NewCmdVersion(out io.Writer) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "append",
-		Short: "Appends a tarball to an image and up",
+		Use:   "version",
+		Short: "Print the version information",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return RunAppend(out, cmd)
+			return RunVersion(out, cmd)
 		},
 	}
-
-	cmd.Flags().StringVar(&baseImage, "base-image", "", "the base image to append to")
-	cmd.Flags().StringVar(&dstImage, "dst-image", "", "the image tag to push")
-	cmd.Flags().StringVar(&layerFile, "layer-file", "", "a tar.gz file to append as a layer")
 
 	cmd.Flags().VarP(versionFlag, "output", "o", versionFlag.Usage())
 	return cmd
 }
 
-func RunAppend(out io.Writer, cmd *cobra.Command) error {
-	if err := build.Append(baseImage, dstImage, layerFile); err != nil {
+func RunVersion(out io.Writer, cmd *cobra.Command) error {
+	if err := versionFlag.Template().Execute(out, version.Get()); err != nil {
 		return errors.Wrap(err, "executing template")
 	}
 	return nil

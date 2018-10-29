@@ -17,14 +17,12 @@ limitations under the License.
 package main
 
 import (
-	"os"
-
-	"github.com/r2d4/notebuilder/cmd/notebuilder/app"
+	"github.com/r2d4/fairing/cmd/fairing/app"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	if err := app.Run(); err != nil {
-		os.Exit(1)
+		logrus.Fatal(err)
 	}
-	os.Exit(0)
 }

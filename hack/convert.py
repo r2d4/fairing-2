@@ -62,5 +62,6 @@ def build_image(base_image, tag):
     notebook_name = get_notebook_name()
     source = convert_to_python(notebook_name)
     output_tar = gen_tarball(source)
-    subprocess.run(["notebuilder", "append", "--layerfile", "--base-image", base_image, "--dst-image", tag], capture_output=True)
+    print(output_tar)
+    subprocess.check_output(["fairing", "append", "--layerfile", output_tar, "--base-image", base_image, "--dst-image", tag], stderr=subprocess.STDOUT)
 

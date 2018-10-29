@@ -17,31 +17,42 @@ limitations under the License.
 package cmd
 
 import (
+	"fmt"
 	"io"
 
+	"github.com/r2d4/fairing/pkg/fairing/build"
+
 	"github.com/pkg/errors"
-	"github.com/r2d4/notebuilder/cmd/notebuilder/app/flags"
-	"github.com/r2d4/notebuilder/pkg/notebuilder/version"
 	"github.com/spf13/cobra"
 )
 
-var versionFlag = flags.NewTemplateFlag("{{.Version}}\n", version.Info{})
+var (
+	baseImage, dstImage, layerFile string
+)
 
-func NewCmdVersion(out io.Writer) *cobra.Command {
+func NewCmdAppend(out io.Writer) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "version",
-		Short: "Print the version information",
+		Use:   "build",
+		Short: "builds an image from a tarball",
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return RunVersion(out, cmd)
+			return RunBuild(out, cmd)
 		},
 	}
+
+	cmd.Flags().StringVar(&baseImage, "base-image", "", "the base image to append to")
+	cmd.Flags().StringVar(&dstImage, "dst-image", "", "the image tag to push")
+	cmd.Flags().StringVar(&layerFile, "layer-file", "", "a tar.gz file to append as a layer")
 
 	cmd.Flags().VarP(versionFlag, "output", "o", versionFlag.Usage())
 	return cmd
 }
 
-func RunVersion(out io.Writer, cmd *cobra.Command) error {
-	if err := versionFlag.Template().Execute(out, version.Get()); err != nil {
+func RunBuild(out io.Writer, cmd *cobra.Command) error {
+	if baseImage == "" || dstImage == "" || layerFile == "" {
+		return fmt.Errorf("base-image, dst-image, and layer-file are all required flags")
+	}
+	if err := build.Build(baseImage, dstImage, layerFile); err != nil {
 		return errors.Wrap(err, "executing template")
 	}
 	return nil

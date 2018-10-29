@@ -23,7 +23,7 @@ GOOS ?= $(shell go env GOOS)
 GOARCH = amd64
 BUILD_DIR ?= ./out
 ORG := github.com/r2d4
-PROJECT := notebuilder
+PROJECT := fairing
 REPOPATH ?= $(ORG)/$(PROJECT)
 RELEASE_BUCKET ?= $(PROJECT)
 

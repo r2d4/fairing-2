@@ -13,11 +13,11 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Append appends a tarball to a base image and uploads the new image
+// Build appends a tarball to a base image and uploads the new image
 // base is the base image to append to
 // tag is the new tag that will be uploaded
 // tarPath is the path to a tarball that will be appended as a layer
-func Append(base, tag, tarPath string) error {
+func Build(base, tag, tarPath string) error {
 	baseRef, err := name.ParseReference(base, name.WeakValidation)
 	if err != nil {
 		return errors.Wrap(err, "parsing source tag")

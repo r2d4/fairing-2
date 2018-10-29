@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
   - name: notebook
-    image: gcr.io/r2d4minikube/notebook
+    image: gcr.io/mrick-gcp/notebook
     ports:
       - containerPort: 8888
