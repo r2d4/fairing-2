@@ -62,7 +62,6 @@ def build_image(base_image, tag):
     notebook_name = get_notebook_name()
     source = convert_to_python(notebook_name)
     output_tar = gen_tarball(source)
-    print(output_tar)
     print("Starting build...")
     try:
         print("Running build...")
@@ -70,4 +69,5 @@ def build_image(base_image, tag):
     except subprocess.CalledProcessError as e:
         print("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+    print("Finished build...")
 
