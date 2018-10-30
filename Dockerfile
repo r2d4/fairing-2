@@ -14,4 +14,4 @@ RUN make install
 FROM base
 ENV JUPYTER_TOKEN=token
 COPY --from=builder /go/bin/fairing /usr/bin/fairing
-COPY --chown=jovyan:users hack/*.py  /home/jovyan/work/lib/
+COPY --chown=jovyan:users fairing-py  /home/jovyan/work/lib/

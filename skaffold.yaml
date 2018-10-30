@@ -4,7 +4,7 @@ build:
   artifacts:
   - image: gcr.io/mrick-gcp/notebook
     sync:
-      'hack/*.py': "/home/jovyan/work/lib/"
+      'fairing-py': "/home/jovyan/work/lib/"
 deploy:
   kubectl:
     manifests:

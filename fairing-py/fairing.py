@@ -63,5 +63,11 @@ def build_image(base_image, tag):
     source = convert_to_python(notebook_name)
     output_tar = gen_tarball(source)
     print(output_tar)
-    subprocess.check_output(["fairing", "append", "--layerfile", output_tar, "--base-image", base_image, "--dst-image", tag], stderr=subprocess.STDOUT)
+    print("Starting build...")
+    try:
+        print("Running build...")
+        subprocess.call(["fairing", "build", "--layer-file", output_tar, "--base-image", base_image, "--dst-image", tag], stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        print("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+        raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
 
