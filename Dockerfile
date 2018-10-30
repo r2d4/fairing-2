@@ -23,6 +23,7 @@ RUN make install
 
 FROM base
 ENV JUPYTER_TOKEN=token
+COPY --chown=jovyan:users config/ipython_kernel_config.py /home/jovyan/.ipython/profile_default/ipython_kernel_config.py
 COPY --from=builder --chown=jovyan:users /root/.docker/config.json /home/jovyan/.docker/config.json
 COPY --from=builder /usr/bin/docker-credential-gcr /usr/bin/docker-credential-gcr
 

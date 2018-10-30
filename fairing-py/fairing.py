@@ -10,10 +10,9 @@ from nbconvert.preprocessors import Preprocessor
 from traitlets.config import Config
 
 import nbconvert
-import ast
-import astunparse
 import tarfile
 import subprocess
+from datetime import datetime
 
 annotation = 'kubeflow/train'
 
@@ -58,11 +57,17 @@ def gen_tarball(contents):
         tar.add(tmpfile)
     return tar_name
 
+
+
 def build_image(base_image, tag):
+    print("Getting notebook contents...")
+    t1, t2 = datetime.now()
     notebook_name = get_notebook_name()
     source = convert_to_python(notebook_name)
     output_tar = gen_tarball(source)
-    print("Starting build...")
+    t2 = datetime.now()
+    print("Finished getting notebook contents in " , t2-t1)
+    print("Starting build!!")
     try:
         print("Running build...")
         subprocess.call(["fairing", "build", "--layer-file", output_tar, "--base-image", base_image, "--dst-image", tag], stderr=subprocess.STDOUT)
@@ -70,4 +75,3 @@ def build_image(base_image, tag):
         print("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
     print("Finished build...")
-

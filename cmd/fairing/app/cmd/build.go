@@ -20,39 +20,36 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/kubeflow/fairing/pkg/fairing/build"
-
+	"github.com/kubeflow/fairing/pkg/fairing/train"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
 
 var (
-	baseImage, dstImage, layerFile string
+	trainingImage, dstImage, srcTar string
 )
 
 func NewCmdAppend(out io.Writer) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "build",
-		Short: "builds an image from a tarball",
+		Use:   "train",
+		Short: "trains an image from a notebook",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return RunBuild(out, cmd)
+			if trainingImage == "" || srcTar == "" {
+				return fmt.Errorf("training-image and source are all required flags")
+			}
+			return RunTrain(out, cmd)
 		},
 	}
 
-	cmd.Flags().StringVar(&baseImage, "base-image", "", "the base image to append to")
-	cmd.Flags().StringVar(&dstImage, "dst-image", "", "the image tag to push")
-	cmd.Flags().StringVar(&layerFile, "layer-file", "", "a tar.gz file to append as a layer")
-
-	cmd.Flags().VarP(versionFlag, "output", "o", versionFlag.Usage())
+	cmd.Flags().StringVar(&trainingImage, "training-image", "", "the base training image to append to")
+	cmd.Flags().StringVar(&dstImage, "tag", "", "the tag to push to, if not provided one will be generated")
+	cmd.Flags().StringVar(&srcTar, "source", "", "a tar.gz file to append as a layer")
 	return cmd
 }
 
-func RunBuild(out io.Writer, cmd *cobra.Command) error {
-	if baseImage == "" || dstImage == "" || layerFile == "" {
-		return fmt.Errorf("base-image, dst-image, and layer-file are all required flags")
-	}
-	if err := build.Build(baseImage, dstImage, layerFile); err != nil {
+func RunTrain(out io.Writer, cmd *cobra.Command) error {
+	if err := train.Train(trainingImage, dstImage, srcTar); err != nil {
 		return errors.Wrap(err, "executing template")
 	}
 	return nil

@@ -20,4 +20,6 @@ import "github.com/sirupsen/logrus"
 
 const (
 	DefaultLogLevel = logrus.WarnLevel
+
+	GoogleCredentialsEnv = "GOOGLE_APPLICATION_CREDENTIALS"
 )
