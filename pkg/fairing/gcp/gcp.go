@@ -2,6 +2,7 @@ package gcp
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/pkg/errors"
@@ -13,10 +14,10 @@ type ServiceAccount struct {
 	ProjectID string `json:"project_id"`
 }
 
-func TryGuessProjectId() (string, error) {
+func ProjectID() (string, error) {
 	secretPath := os.Getenv(constants.GoogleCredentialsEnv)
 	if secretPath == "" {
-		return "", nil
+		return "", fmt.Errorf("could not get credentials file path from env")
 	}
 
 	f, err := os.Open(secretPath)

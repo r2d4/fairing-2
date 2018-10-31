@@ -29,7 +29,7 @@ var (
 	trainingImage, dstImage, srcTar string
 )
 
-func NewCmdAppend(out io.Writer) *cobra.Command {
+func NewCmdTrain(out io.Writer) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "train",
 		Short: "trains an image from a notebook",
